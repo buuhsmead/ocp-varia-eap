@@ -14,3 +14,10 @@ ACCOUNTS_DERBY_XA_CONNECTION_PROPERTY_DatabaseName=/home/jboss/source/data/datab
 # _HOST and _PORT are required, but not used
 ACCOUNTS_DERBY_SERVICE_HOST=dummy
 ACCOUNTS_DERBY_SERVICE_PORT=1527
+
+#DRIVER
+DRIVERS=DERBY
+DERBY_DRIVER_NAME=derby
+DERBY_DRIVER_MODULE=org.apache.derby
+DERBY_DRIVER_CLASS=org.apache.derby.jdbc.EmbeddedDriver
+DERBY_XA_DATASOURCE_CLASS=org.apache.derby.jdbc.EmbeddedXADataSource
