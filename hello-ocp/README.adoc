@@ -1,0 +1,6 @@
+
+
+Using the external database configuration (derby / oracle / others)
+as descibed at https://github.com/travisrogers05/eap-oracle-db
+
+And described at https://access.redhat.com/solutions/3533601
