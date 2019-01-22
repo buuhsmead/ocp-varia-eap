@@ -10,7 +10,7 @@ import org.jboss.msc.value.InjectedValue;
 import org.wildfly.clustering.group.Group;
 import org.wildfly.clustering.group.Node;
 
-class HelloSingletonService implements Service<Node> {
+public class HelloSingletonService implements Service<Node> {
 
     private Logger LOG = Logger.getLogger(this.getClass());
 

@@ -73,5 +73,12 @@
             </plugin>
         </plugins>
     </build>
-    
+
+
+    <profiles>
+        <profile>
+            <id>openshift</id>
+            <!--copy EAR to $LOCAL_SOURCE_DIR/$ARTIFACT_DIR-->
+        </profile>
+    </profiles>
 </project>

@@ -20,7 +20,7 @@ import java.util.concurrent.TimeoutException;
  *
  * @author Radoslav Husar
  */
-class HelloQueryingService implements Service<Void> {
+public class HelloQueryingService implements Service<Void> {
 
     private Logger LOG = Logger.getLogger(this.getClass());
     private ScheduledExecutorService executor;
@@ -37,6 +37,7 @@ class HelloQueryingService implements Service<Void> {
                     .getService(HelloServiceActivator.SINGLETON_SERVICE_NAME);
             try {
                 Node node = service.awaitValue(5, TimeUnit.SECONDS);
+
                 LOG.infof("Singleton service is running on node '%s'.", node);
             } catch (InterruptedException | TimeoutException | IllegalStateException e) {
                 LOG.warn("Failed to query singleton service.");

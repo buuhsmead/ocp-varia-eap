@@ -14,7 +14,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- EAP component version management BOM -->
-    <version.server.bom>7.1.4.GA</version.server.bom>
+    <version.server.bom>7.1.5.GA</version.server.bom>
     <version.jboss.spec.javaee.7.0>1.1.0.Final-redhat-4</version.jboss.spec.javaee.7.0>
 
     <!-- https://docs.jboss.org/wildfly/plugins/maven/latest/ -->
