@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.github.buuhsmead.ocp-varia-eap</groupId>
+  <artifactId>hello-ocp-parent</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+
+  <packaging>pom</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- EAP component version management BOM -->
+    <version.server.bom>7.1.5.GA</version.server.bom>
+    <version.jboss.spec.javaee.7.0>1.1.0.Final-redhat-4</version.jboss.spec.javaee.7.0>
+
+    <!-- https://docs.jboss.org/wildfly/plugins/maven/latest/ -->
+    <version.wildfly.maven.plugin>2.0.0.Final</version.wildfly.maven.plugin>
+    <!-- https://maven.apache.org/plugins/maven-ejb-plugin/index.html -->
+    <version.ejb.plugin>3.0.1</version.ejb.plugin>
+    <!-- http://maven.apache.org/plugins/maven-war-plugin/ -->
+    <version.war.plugin>3.2.2</version.war.plugin>
+    <!-- http://maven.apache.org/plugins/maven-ear-plugin/index.html -->
+    <version.ear.plugin>3.0.1</version.ear.plugin>
+    <version.compiler.plugin>3.8.0</version.compiler.plugin>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+
+    <jboss.home.name>EAP7_HOME</jboss.home.name>
+  </properties>
+
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- JBoss distributes a complete set of Java EE APIs including a Bill
+                of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection)
+                of artifacts. We use this here so that we always get the correct versions
+                of artifacts. Here we use the jboss-eap-javaee7-with-tools stack (you can
+                read this as the JBoss stack of the Java EE APIs, with some extras tools
+                for your project, such as Arquillian for testing) -->
+      <dependency>
+        <groupId>org.jboss.bom</groupId>
+        <artifactId>jboss-eap-javaee7-with-tools</artifactId>
+        <version>${version.server.bom}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- Define the version of the JBoss Java EE APIs we want to use -->
+      <!-- JBoss distributes a complete set of Java EE APIs including
+         a Bill of Materials (BOM). A BOM specifies the versions of a "stack" (or
+         a collection) of artifacts. We use this here so that we always get the correct
+         versions of artifacts. Here we use the jboss-javaee-7.0 stack (you can
+         read this as the JBoss stack of the Java EE APIs). You can actually
+         use this stack with any version of JBoss EAP that implements Java EE. -->
+      <dependency>
+        <groupId>org.jboss.spec</groupId>
+        <artifactId>jboss-javaee-7.0</artifactId>
+        <version>${version.jboss.spec.javaee.7.0}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!-- Define the version of the EJB jar so that we don't need
+                to repeat ourselves in every module -->
+      <dependency>
+        <groupId>com.github.buuhsmead.ocp-varia-eap</groupId>
+        <artifactId>hello-ocp-ejb</artifactId>
+        <version>${project.version}</version>
+        <type>ejb</type>
+      </dependency>
+
+      <!-- Define the version of the WAR so that we don't need to repeat
+          ourselves in every module -->
+      <dependency>
+        <groupId>com.github.buuhsmead.ocp-varia-eap</groupId>
+        <artifactId>hello-ocp-war</artifactId>
+        <version>${project.version}</version>
+        <type>war</type>
+        <scope>compile</scope>
+      </dependency>
+
+
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.wildfly.plugins</groupId>
+          <artifactId>wildfly-maven-plugin</artifactId>
+          <version>${version.wildfly.maven.plugin}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-ejb-plugin</artifactId>
+          <version>${version.ejb.plugin}</version>
+          <configuration>
+            <!-- Tell Maven we are using EJB -->
+            <ejbVersion>3.2</ejbVersion>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>${version.war.plugin}</version>
+          <configuration>
+            <failOnMissingWebXml>false</failOnMissingWebXml>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-ear-plugin</artifactId>
+          <version>${version.ear.plugin}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${version.compiler.plugin}</version>
+          <configuration>
+            <!-- put your configurations here -->
+            <source>${maven.compiler.source}</source>
+            <target>${maven.compiler.target}</target>
+          </configuration>
+        </plugin>
+
+      </plugins>
+
+    </pluginManagement>
+  </build>
+
+
+  <modules>
+    <module>hello-ocp-ejb</module>
+    <module>hello-ocp-war</module>
+    <module>hello-ocp-ear</module>
+  </modules>
+</project>

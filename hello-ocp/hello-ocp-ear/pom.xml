@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.github.buuhsmead.ocp-varia-eap</groupId>
+        <artifactId>hello-ocp-parent</artifactId>
+        <version>0.1.0-SNAPSHOT</version>
+    </parent>
+
+<packaging>ear</packaging>
+
+    <artifactId>hello-ocp-ear</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.buuhsmead.ocp-varia-eap</groupId>
+            <artifactId>hello-ocp-ejb</artifactId>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>com.github.buuhsmead.ocp-varia-eap</groupId>
+            <artifactId>hello-ocp-war</artifactId>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+
+
+
+    <build>
+        <!--<finalName>${project.parent.artifactId}</finalName>-->
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <configuration>
+                    <!-- Tell Maven we are using Java EE -->
+                    <version>7</version>
+                    <!-- Use Java EE ear libraries as needed. Java EE ear libraries
+                        are in easy way to package any libraries needed in the ear, and automatically
+                        have any modules (EJB-JARs and WARs) use them -->
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <outputFileNameMapping>@{artifactId}@-@{version}@@{dashClassifier?}@.@{extension}@</outputFileNameMapping>
+                    <modules>
+
+                        <!-- Default context root of the web app is /kitchensink-ml-ear-web.
+                        If a custom context root is needed, uncomment the following snippet to
+                        register our War as a web module and set the contextRoot property -->
+                        <!--
+                        <webModule>
+                            <groupId>org.jboss.eap.quickstarts</groupId>
+                            <artifactId>kitchensink-ml-ear-web</artifactId>
+                            <contextRoot>/kitchensink-ml-ear</contextRoot>
+                        </webModule>
+                        -->
+                    </modules>
+
+                </configuration>
+            </plugin>
+            <!-- The WildFly plug-in deploys your ear to a local JBoss EAP container.
+                Due to Maven's lack of intelligence with EARs we need to configure
+                the WildFly Maven plug-in to skip deployment for all modules. We then enable
+                it specifically in the ear module. -->
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <configuration>
+                    <skip>false</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <profiles>
+        <profile>
+            <id>openshift</id>
+            <!--copy EAR to $LOCAL_SOURCE_DIR/$ARTIFACT_DIR-->
+        </profile>
+    </profiles>
+</project>
